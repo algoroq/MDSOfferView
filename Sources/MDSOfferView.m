@@ -88,7 +88,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.button.frame = self.bounds;
-    CGRect progressRect = CGRectMake(CGRectGetWidth(self.bounds) - CGRectGetHeight(self.bounds), 0, CGRectGetHeight(self.bounds), CGRectGetHeight(self.bounds));
+    CGRect progressRect = CGRectMake((CGRectGetWidth(self.bounds) - CGRectGetHeight(self.bounds))/2, 0, CGRectGetHeight(self.bounds), CGRectGetHeight(self.bounds));
     self.progressView.frame = progressRect;
     self.pendingView.frame = progressRect;
     self.stopSymbolView.frame = progressRect;
@@ -171,11 +171,13 @@
 }
 
 - (CGSize)intrinsicContentSize {
-    CGSize size = [self.button intrinsicContentSize];
-    if (size.width < size.height) {
-        size.width = size.height;
+    if(self.state == MDSOfferViewStateNormal || self.state == MDSOfferViewStateDownloaded)
+    {
+        CGSize size = [self.button intrinsicContentSize];
+        return size;
     }
-    return size;
+    
+    return self.bounds.size;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
